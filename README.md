@@ -1,6 +1,6 @@
 # Welcome to my chart repo
 
-![Node-RED](https://nodered.org/about/resources/media/node-red-icon.png=50x50)
+<img src="https://nodered.org/about/resources/media/node-red-icon.png" alt="Node-RED"i height="50"  width="50"/>
 
 ## Content
 
