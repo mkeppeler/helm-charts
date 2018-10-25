@@ -1,6 +1,6 @@
 # Welcome to my chart repo
 
-<img src="https://nodered.org/about/resources/media/node-red-icon.png" alt="Node-RED"i height="50"  width="50"/>
+![Node-RED](https://mkeppeler.github.io/helm-charts/node-red.png)
 
 ## Content
 
