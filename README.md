@@ -1,37 +1,58 @@
-## Welcome to my chart repo
+# Welcome to my chart repo
 
-You can use the [editor on GitHub](https://github.com/mkeppeler/helm-charts/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+![Node-RED](https://nodered.org/about/resources/media/node-red-icon.png)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Content
 
-### Markdown
+- Creating the Node-RED Image and upload it to IBM Cloud Private
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Creating the Node-RED Image and upload it to IBM Cloud Private
 
-```markdown
-Syntax highlighted code block
+You need a linux environment with docker installed.
 
-# Header 1
-## Header 2
-### Header 3
+1. From a command line run the following command to pull and start the container
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker
+```
+For more information about this command, go to https://hub.docker.com/r/nodered/node-red-docker/
 
-- Bulleted
-- List
+2. If you open localhost:1880 you will be in the Node Red console. To install other nodes, like watson, in Node-RED run
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+docker exec -it mynodered /bin/bash
 ```
 
+3. Now your running the command line in your container, run `npm install`  to add the watson package.
+
+```
+npm install node-red-node-watson
+```
+Once you installed the package you want restart the container
+
+```
+docker stop mynodered
+docker start mynodered
+```
+4. To create a new image from the container run
+
+```
+docker commit mynodered node-red-watson
+```
+
+5. Run your new image to make sure the changes have made it into the new images
+
+```
+docker run -d --restart=always -p 1880:1880 node-red-watson:latest
+```
+
+6. Tag the image and upload it to your IBM Cloud Private instance by executing
+
+```
+docker tag node-red-watson:latest mycluster.icp:8500/default/node-red-watson:0.19.04
+docker login mycluster.icp:8500
+docker push mycluster.icp:8500/default/node-red-watson:0.19.04
+```
+[pushung and pulling images](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.1.0/manage_images/using_docker_cli.html)
+
+
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mkeppeler/helm-charts/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
