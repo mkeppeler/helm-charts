@@ -4,7 +4,7 @@
 
 ## Content
 
-- Creating the Node-RED Image and upload it to IBM Cloud Private
+* Creating the Node-RED Image and upload it to IBM Cloud Private
 
 ## Creating the Node-RED Image and upload it to IBM Cloud Private
 
